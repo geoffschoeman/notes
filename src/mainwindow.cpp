@@ -587,7 +587,7 @@ void MainWindow::setupDatabases ()
 
 void MainWindow::setupModelView()
 {
-    m_noteView = static_cast<NoteView*>(ui->listView);
+    m_noteView = static_cast<NoteView*>(ui->listView_notes);
     m_proxyModel->setSourceModel(m_noteModel);
     m_proxyModel->setFilterKeyColumn(0);
     m_proxyModel->setFilterRole(NoteModel::NoteContent);
