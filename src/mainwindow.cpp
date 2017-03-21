@@ -20,6 +20,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QList>
+#include <QTreeWidget>
 #define FIRST_LINE_MAX 80
 
 /**
@@ -588,6 +589,20 @@ void MainWindow::setupDatabases ()
 void MainWindow::setupModelView()
 {
     m_noteView = static_cast<NoteView*>(ui->listView_notes);
+    QTreeWidget* treeWidget = ui->treeWidget_category;
+    //treeWidget->setStyleSheet("QTreeWidget::item { border-bottom: 1px solid black; padding: 2px;}");
+    treeWidget->setStyleSheet("QTreeWidget::item { padding: 2px;}");
+    QTreeWidgetItem *allNotes = new QTreeWidgetItem(treeWidget);
+    allNotes->setText(0, tr("All Notes"));
+    QTreeWidgetItem *trash = new QTreeWidgetItem(treeWidget);
+    trash->setText(0, tr("Trash"));
+
+    QTreeWidgetItem *cat1 = new QTreeWidgetItem(treeWidget);
+    cat1->setText(0, tr("Categories"));
+    QTreeWidgetItem *cat2 = new QTreeWidgetItem(cat1);
+    cat2->setText(0, tr("Sub Category"));
+    //cat1->addChild(cat2);
+    //treeWidget->addTopLevelItem(allNotes);
     m_proxyModel->setSourceModel(m_noteModel);
     m_proxyModel->setFilterKeyColumn(0);
     m_proxyModel->setFilterRole(NoteModel::NoteContent);

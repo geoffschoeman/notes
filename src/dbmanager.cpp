@@ -40,8 +40,27 @@ DBManager::DBManager(const QString& path, bool doCreate, QObject *parent) : QObj
                           "content TEXT,"
                           "full_title TEXT)";
         query.exec(deleted);
-    }
 
+        QString categories = "CREATE TABLE categories ("
+                          "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
+                          "parent INTEGER NOT NULL DEFAULT (0),"
+                          "name TEXT)";
+        query.exec(categories);
+
+        QString category_index = "CREATE UNIQUE INDEX category_index on categories (id ASC);";
+        query.exec(category_index);
+
+        QString note_category = "CREATE TABLE note_category ("
+                                "note_id INTEGER NOT NULL,"
+                                "category_id INTEGER NOT NULL)";
+         query.exec(note_category);
+
+         QString note_category_note_index = "CREATE UNIQUE INDEX note_category_note_index on note_category (note_id ASC);";
+         query.exec(note_category_note_index);
+
+         QString note_category_category_index = "CREATE INDEX note_category_category_index on note_category (category_id ASC);";
+         query.exec(note_category_category_index);
+    }
 }
 
 bool DBManager::isNoteExist(NoteData* note)
